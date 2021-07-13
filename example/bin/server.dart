@@ -4,6 +4,10 @@ import 'package:args/args.dart';
 import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as io;
 
+// Path is not a direct, main dependency, and I can still import it and use it.
+// It's a transitive dependency. Check pubspec.yaml and pubspec.lock to verify.
+import 'package:path/path.dart';
+
 // For Google Cloud Run, set _hostname to '0.0.0.0'.
 const _hostname = 'localhost';
 
@@ -30,5 +34,7 @@ void main(List<String> args) async {
   print('Serving at http://${server.address.host}:${server.port}');
 }
 
+// current is defined in path:
+// /// Gets the path to the current working directory.
 shelf.Response _echoRequest(shelf.Request request) =>
-    shelf.Response.ok('Request for "${request.url}"');
+    shelf.Response.ok('Request for "${request.url}" from "$current"');
